@@ -3,11 +3,14 @@ import react from 'react';
 import { Link } from 'react-router-dom';
 
 
-const Landing = () => {
+const Landing = (props) => {
     var name = "Cake Shop"
+    function logout() {
+        localStorage.removeItem("token")
+        window.location.reload();
+    }
     return (
         <>
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">{name}</a>
@@ -21,9 +24,6 @@ const Landing = () => {
                             </li></Link>
                             <Link to={'/productDetails'}><li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#">Product Detail</a>
-                            </li></Link>
-                            <Link to={'/login'}><li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Login</a>
                             </li></Link>
                             <Link to={'/signup'}><li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#">SignUp</a>
@@ -46,10 +46,15 @@ const Landing = () => {
                                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                             </li>
                         </ul>
-                        <form class="d-flex">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        {!props.isuserloogedin && <form class="d-flex">
+                            <Link to={'/login'}> <button class="btn btn-outline-success mr-2" type="submit">Login</button></Link>
+                        </form>}
+
+                        {props.isuserloogedin && <form class="d-flex">
+                            <Link to={'/'}> <button class="btn btn-outline-warning" type="submit">Cart</button></Link>
+                            <Link to={'/'}> <button class="btn btn-outline-danger" onClick={logout} type="submit">Logout</button></Link>
                         </form>
+                        }
                     </div>
                 </div>
             </nav>

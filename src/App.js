@@ -9,22 +9,27 @@ import SignUp from './components/signup';
 import Product from './components/productDetails';
 import Cards from './components/cards';
 import Home from './components/home';
+import { useState } from 'react';
 
 function App() {
+  var [isuserloogedin, setUserLogin] = useState(localStorage.token ? true : false);
+  function loggedin() {
+    setUserLogin(true)
+  }
 
   return (
     <div className="App">
       <Router>
-        <Landing />
+        <Landing isuserloogedin={isuserloogedin} />
         <Switch>
           <Route exact path='/' component={Home} />
           <Route exact path='/cards' component={Cards} />
-          <Route exact path='/login' component={Login} />
+          <Route exact path='/login' ><Login loggedin={loggedin} /></Route>
           <Route exact path='/productDetails' component={Product} />
           <Route exact path='/signup' component={SignUp} />
         </Switch>
       </Router>
-    </div>
+    </div >
   );
 }
 
